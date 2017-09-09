@@ -60,6 +60,9 @@ pom.xml.asc
 
 ### Cojurescript
 out/
+node_modules/
+package.json
+package-lock.json
 
 ### Leiningen ###
 pom.xml
