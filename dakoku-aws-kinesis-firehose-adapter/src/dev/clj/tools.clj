@@ -14,14 +14,12 @@
 (def cljs-out-dir "out")
 (def cljs-main-js "index.js")
 (def cljs-output-to (str cljs-out-dir "/" cljs-main-js))
-(def cljs-source-map (str cljs-output-to ".map"))
 (def cljs-npm-deps {:npm-deps {:aws-sdk "2.94.0"}
                     :install-deps true})
 (def cljs-compiler-opts (merge cljs-npm-deps
                                {:output-dir cljs-out-dir
                                 :output-to cljs-output-to
                                 :optimizations :simple
-                                :source-map cljs-source-map
                                 :target :nodejs
                                 :verbose true}))
 
@@ -42,13 +40,11 @@
     (let [zip (ZipOutputStream. (jio/output-stream (str target-dir "/" archive-file-name)))
            _ (defer (.close zip))
            main-js (jio/file cljs-output-to)
-           source-map (jio/file cljs-source-map)
            append (fn [^String entry-name ^File f]
                     (.putNextEntry zip (ZipEntry. entry-name))
                     (jio/copy f zip)
                     (.closeEntry zip))]
       (append (.getName main-js) main-js)
-      (append (.getName source-map) source-map)
       (comment (doseq [f (file-seq (jio/file "node_modules")) :when (.isFile f)]
         (append (.getPath f) f))))))
 
@@ -60,5 +56,4 @@
                            :optimizations :simple
                            :output-dir "out"
                            :output-to cljs-output-to
-                           :source-map cljs-source-map
                            :verbose true})))

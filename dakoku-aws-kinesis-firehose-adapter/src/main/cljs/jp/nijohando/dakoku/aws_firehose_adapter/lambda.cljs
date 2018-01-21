@@ -1,6 +1,6 @@
 (ns jp.nijohando.dakoku.aws-kinesis-firehose-adapter.lambda
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [jp.nijohando.dakoku.aws-firehose-adapter.core :as core]
+  (:require [jp.nijohando.dakoku.aws-kinesis-firehose-adapter.core :as core]
             [jp.nijohando.failable :refer [fail guard failure?] :refer-macros [flet f->]]
             [cljs.core.async :refer [promise-chan >! <!]]
             [cljs.nodejs :as nodejs]))
